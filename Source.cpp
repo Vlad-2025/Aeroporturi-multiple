@@ -54,12 +54,12 @@ void cerc(int x0, int y0, int r, int** matriceHarta, int tip, int n, int m)
         return;
     int x, y, xx, rr;
 
-    //      xx si rr inseama x * x, respectiv r * r;
+    //      - xx si rr inseama x * x, respectiv r * r;
     //      
-    //      ia -r pentru ca intervalul [-r, r] reprezinta diametrul;
+    //      - intervalul [-r, r] reprezinta diametrul;
     //
-    //      r * r se face la inceput pentru ca nu se mai schimba, 
-    //      x * x se face in 'for'-ul dupa cel in care a fost declarat
+    //      - r * r se face la inceput pentru ca nu se mai schimba, 
+    //      - x * x se face in 'for'-ul dupa cel in care a fost declarat
     //      pentru ca se schimba, la fel si y * y, doar ca e in 'if'
 
     for (rr = r * r, x = -r; x <= r; x++)
@@ -114,7 +114,7 @@ int** creareMatrieHartaNumere(int &randuri, int &coloane)
     
     int** matriceHartaBaza = creare_matrice(randuri, coloane);
 
-    do
+    while (!fin.eof())
     {
         // 3 valori din fisier sunt x, y si numarul aeroportului;
         // urmatoarea e ce fel de zona, militara sau civila (0 pt militar, 1 pt civil);
@@ -136,7 +136,7 @@ int** creareMatrieHartaNumere(int &randuri, int &coloane)
         matriceHartaBaza[aux.x][aux.y] = aux.numar;
         
 
-    } while (!fin.eof());
+    } 
 
     fin.close();
     
@@ -182,7 +182,7 @@ void introducereZboruri()
 
     zbor aux;   
 
-    do
+     while (!fin.eof())
     {
         fin >> aux.IDzbor;
         fin >> aux.plecare >> aux.destinatie;
@@ -193,7 +193,7 @@ void introducereZboruri()
 
         vectorZboruri.push_back(aux);
 
-    } while (!fin.eof());
+    }
 
     fin.close();
 }
@@ -266,12 +266,12 @@ int** submatrice(int** matrice, int iSus, int iJos, int jStanga, int jDreapta, i
 
 /// <summary>
 /// 
-/// istart si jstart sunt pt aeroportul de plecare.
-/// iSus si restu sunt pentru submatrice.
+/// 'istart' si 'jstart' sunt pt aeroportul de plecare.
+/// 'iSus' si restul sunt pentru submatrice.
 /// 
-/// tipZbor e pt gen militar sau civil pentru zonele alea speciale.
+/// 'tipZbor' e pt militar sau civil pentru zonele speciale.
 /// 
-/// start e coltu din care pleaca
+/// 'start' e coltul din care pleaca
 /// 
 /// </summary>
 void algLee(int** matriceBaza, int iSus, int iJos, int jStanga, int jDreapta, string tipZbor, int&suma,
@@ -290,28 +290,28 @@ void algLee(int** matriceBaza, int iSus, int iJos, int jStanga, int jDreapta, st
     else
         jstart = coloane - 2;
     
-    int di[10] = { 0, 0, 1, -1 };       //|
-    int dj[10] = { 1, -1, 0, 0 };       //|
-    queue<pair<int, int>> Q;            //|
+    int di[10] = { 0, 0, 1, -1 };
+    int dj[10] = { 1, -1, 0, 0 };
+    queue<pair<int, int>> Q;
 
-    Q.push(make_pair(istart, jstart));//initializare coada
-    A[istart][jstart] = 1;//marcare pozitie de start
+    Q.push(make_pair(istart, jstart));
+    A[istart][jstart] = 1;
     
-    while (!Q.empty()) // cat timp coada este nevida
+    while (!Q.empty())
     {
-        int i = Q.front().first, j = Q.front().second; // determinam elementul de la inceputul cozii
+        int i = Q.front().first, j = Q.front().second;
 
         for (int k = 0; k < 4; k++)
         {
-            int iv = i + di[k], jv = j + dj[k]; // coordonatele vecinului
+            int iv = i + di[k], jv = j + dj[k];
 
             if (iv >= 1 && iv <= randuri && jv >= 1 && jv <= coloane) 
             {
                 if((A[iv][jv] == -6 || A[iv][jv] == 0) && tipZbor == "civil")
                 {
                     A[iv][jv] = 0;
-                    A[iv][jv] = A[i][j] + 1;    // marcam elementul vecin cu o valoare mai mare
-                    Q.push(make_pair(iv, jv));  // il adaugam in coada
+                    A[iv][jv] = A[i][j] + 1;    
+                    Q.push(make_pair(iv, jv)); 
                     
                 }
                 else if((A[iv][jv] == -5 || A[iv][jv] == -6 || A[iv][jv] == 0) && tipZbor == "militar")
@@ -322,7 +322,7 @@ void algLee(int** matriceBaza, int iSus, int iJos, int jStanga, int jDreapta, st
                 }
             }
         }
-        Q.pop(); // eliminam din coada
+        Q.pop();
     }
     cout << endl;
     /*
@@ -362,8 +362,8 @@ void algLee(int** matriceBaza, int iSus, int iJos, int jStanga, int jDreapta, st
 /*
 void Traseu2(int istop, int jstop)
 {
-    int di[10] = { 0, 0, 1, -1 };       //|
-    int dj[10] = { 1, -1, 0, 0 };       //|
+    int di[10] = { 0, 0, 1, -1 };
+    int dj[10] = { 1, -1, 0, 0 };
     vector<pair<int, int>> V;
     int i = istop, j = jstop;
     V.push_back(make_pair(i, j));
@@ -545,13 +545,3 @@ IntroducereTip:
     
     return 0;
 }
-
-/*
-
-left top corner: arr[0][0]
-right top corner: arr[0][m-1]
-left bottom corner: arr[n-1][0]
-right bottom corner: arr[n-1][m-1]
-
-*/
-
