@@ -1,0 +1,17 @@
+xd21
+1 5
+200
+400
+civil
+
+bravoAS
+1 4
+300
+400
+civil
+
+avsiLE
+2 3
+50
+400
+militar
